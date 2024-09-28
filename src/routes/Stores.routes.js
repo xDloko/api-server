@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { storeRegister, registrarProducto, añadirProductos, login, storelogout } from '../controllers/store.controller.js'
+import { storeRegister, registrarProducto, añadirProductos, login, storelogout, obtenerTiendas } from '../controllers/store.controller.js'
 import { storeRequired } from '../middlewares/storeValidate.js'
 
 const router = Router()
