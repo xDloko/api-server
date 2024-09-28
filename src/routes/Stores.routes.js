@@ -9,6 +9,6 @@ router.post("/producto", registrarProducto)
 router.post("/productos-update", storeRequired, añadirProductos)
 router.post("/tienda-login", login)
 router.post("/tienda-logout", storelogout)
-router.post("/tienda-all", obtenerTiendas)
+router.get("/tienda-all", obtenerTiendas)
 
 export default router;
