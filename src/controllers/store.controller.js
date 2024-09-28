@@ -151,3 +151,22 @@ export const storelogout = (req, res)=>{
 
   return res.sendStatus(200);
 }
+
+export const obtenerTiendas= async ( req, res )=>{
+  const task = await Store.find()
+  res.status(200).json(task)
+}
+
+export const obtenerTienda= async ( req, res )=>{
+  try {
+    const { tienda } = req.params;
+    const task = await Store.findOne({ tienda: tienda }); 
+    if (!task) {
+      return res.status(404).json({ message: 'Tienda no encontrada' });
+    }
+    res.status(200).json(task);
+    console.log(task);
+  } catch (error) {
+    res.status(500).json({ message: 'Error del servidor', error });
+  }
+}
