@@ -162,7 +162,7 @@ export const obtenerTienda= async ( req, res )=>{
     const { tienda } = req.params;
     const task = await Store.findOne({ tienda: tienda }); 
     if (!task) {
-      return res.status(404).json({ message: 'Tienda no encontrada' });
+      return res.status(402).json({ message: 'Tienda no encontrada' });
     }
     res.status(200).json(task);
     console.log(task);
