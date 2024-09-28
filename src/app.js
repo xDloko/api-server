@@ -12,7 +12,7 @@ app.use(cookieParser())
 app.use(cors())
 
 app.use("/api",authRoutes);
-app.use("/api",authstoreRoutes);
+app.use("/api/store",authstoreRoutes);
 
 
 export default app;
