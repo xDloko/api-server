@@ -125,10 +125,10 @@ export const login = async (req, res) => {
   try {
 
     const storeFound = await Store.findOne({email})
-    if (!storeFound) return res.status(30).json({message: 'user not found'})
+    if (!storeFound) return res.status(400).json({message: 'user not found'})
 
     const isMatch = await bcypt.compare(password, storeFound.password);
-    if (!isMatch) return res.status(30).json({message: 'invalid credencials'})
+    if (!isMatch) return res.status(400).json({message: 'invalid credencials'})
 
     const token = await storecreateAccesToken({id: storeFound._id})
     
