@@ -123,23 +123,31 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    const storeFound = await Store.findOne({ email });
+    if (!storeFound) {
+      return res.status(400).json({ message: 'User not found' });
+    }
 
-    const storeFound = await Store.findOne({email})
-    if (!storeFound) return res.status(400).json({message: 'user not found'})
+    const isMatch = await bcrypt.compare(password, storeFound.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
-    const isMatch = await bcypt.compare(password, storeFound.password);
-    if (!isMatch) return res.status(400).json({message: 'invalid credencials'})
+    const token = await storecreateAccesToken({ id: storeFound._id });
 
-    const token = await storecreateAccesToken({id: storeFound._id})
-    
-    res.cookie('token', token)   
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 3600000,
+    });
+
     res.json({
       id: storeFound._id,
-      password: storeFound.password,
       email: storeFound.email,
     });
   } catch (error) {
-    res.status(500).json({message: error.message})
+    console.error("Error en login:", error); // Añade un log para ver el error
+    res.status(500).json({ message: error.message });
   }
 };
 
