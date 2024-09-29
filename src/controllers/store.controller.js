@@ -1,5 +1,5 @@
 import Store from "../models/store.model.js";
-import bcypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
 import { storecreateAccesToken } from '../libs/jwt-store.js'
 
