@@ -19,7 +19,7 @@ router.post("/tienda-eliminarmenu", eliminarMenu)
 /** Productos */
 router.post("/tienda-crearproducto", crearProducto)
 router.post("/tienda-editarproducto", editarProducto)
-router.get("/tienda-verproductos", obtenerProductos)
+router.post("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
 /** admin */
 router.post("/admin-vertiendas", obtenerTiendas)
