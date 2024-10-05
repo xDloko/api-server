@@ -135,7 +135,7 @@ export const eliminarMenu = async (req, res) => {
   const elementoEliminar = await Menu.findOneAndDelete(menu)
   if(!elementoEliminar) res.status(404).json({message: 'no se ha encontrado el elemento'})
 
-  res.json('producto eliminado ',elementoEliminar)
+    res.status(200).json({ message: 'Producto eliminado' });
 
 };
 
