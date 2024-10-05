@@ -14,7 +14,7 @@ router.post("/tienda-logout", storelogout)
 /** Menus */
 router.post("/tienda-crearmenu", crearMenu)
 router.post("/tienda-editarmenu", editarMenu)
-router.get("/tienda-vermenu", obtenerMenus)
+router.post("/tienda-vermenu", obtenerMenus)
 router.post("/tienda-eliminarmenu", eliminarMenu)
 /** Productos */
 router.post("/tienda-crearproducto", crearProducto)
