@@ -1,5 +1,9 @@
 import { Router } from 'express'
-import { storeRegister, registrarProducto, añadirProductos, login, storelogout, obtenerTiendas } from '../controllers/store.controller.js'
+import { 
+    storeRegister, login, storelogout, obtenerTiendas,
+    crearMenu, editarMenu, obtenerMenus, eliminarMenu,
+    crearProducto, editarProducto, obtenerProductos, eliminarProducto
+} from '../controllers/store.controller.js'
 import { storeRequired } from '../middlewares/storeValidate.js'
 
 const router = Router()
@@ -10,17 +14,16 @@ router.post("/tienda-logout", storelogout)
 /** Menus */
 router.post("/tienda-crearmenu", crearMenu)
 router.post("/tienda-editarmenu", editarMenu)
-router.post("/tienda-vermenu", obtenerMenus)
+router.get("/tienda-vermenu", obtenerMenus)
 router.post("/tienda-eliminarmenu", eliminarMenu)
 /** Productos */
 router.post("/tienda-crearproducto", crearProducto)
 router.post("/tienda-editarproducto", editarProducto)
-router.post("/tienda-verproductos", obtenerProductos)
+router.get("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
 /** admin */
 router.post("/admin-vertiendas", obtenerTiendas)
 router.post("/admin-vertienda", obtenerTienda)
-router.post("/producto", obtenerTiendas)
 router.post("/producto", obtenerTiendas)
 
 
