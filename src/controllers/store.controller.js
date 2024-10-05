@@ -80,6 +80,7 @@ export const storelogout = (req, res)=>{
 export const crearMenu = async (req, res) => {
   const { tienda_id, name, descripccion, categoria } = req.body;
 
+  console.log(req.body);
   try {
     const newMenu = new Menu({
       tienda_id,
