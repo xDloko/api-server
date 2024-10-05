@@ -121,7 +121,7 @@ export const editarMenu = async (req, res) => {
 export const obtenerMenus= async ( req, res )=>{
   try {
     const { tienda_id } = req.body
-    const menus = await Menu.find({ tienda_id });
+    const menus = await Menu.find(tienda_id);
     if (!menus.length) {
       return res.status(404).json({ message: 'No se encontraron menús para esta tienda' });
     }
