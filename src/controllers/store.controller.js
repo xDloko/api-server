@@ -189,8 +189,8 @@ export const editarProducto = async (req, res) => {
 
 export const obtenerProductos= async ( req, res )=>{
   try {
-    const menu = req.body
-    const productoFind = await Producto.find( menu.id );
+    const { menu } = req.body
+    const productoFind = await Producto.find({ menu });
     if (!productoFind.length) {
       return res.status(404).json({ message: 'No se encontraron productos en este menu' });
     }
