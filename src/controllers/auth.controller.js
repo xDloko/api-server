@@ -18,7 +18,6 @@ export const login = async (req, res) => {
     res.cookie('token', token)   
     res.json({
       id: userFound._id,
-      password: userFound.password,
       email: userFound.email,
     });
   } catch (error) {
