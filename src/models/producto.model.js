@@ -1,4 +1,6 @@
-const Producto = new Schema({
+import mongoose from "mongoose";
+
+const Producto = new mongoose.Schema({
     menu_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Menu', required: true },
     name: { type: String, required: true },
     precio: { type: Number, required: true },
@@ -6,4 +8,4 @@ const Producto = new Schema({
     descripcion: { type: String },
   });
   
-  module.exports = mongoose.model('Producto', Producto);
+  export default mongoose.model('Producto', Producto);

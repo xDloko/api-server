@@ -1,4 +1,6 @@
-const Factura = new Schema({
+import mongoose from "mongoose";
+
+const Factura = new mongoose.Schema({
     tienda_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tienda', required: true },
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     total: { type: Number, required: true },
@@ -12,4 +14,4 @@ const Factura = new Schema({
     ]
   });
   
-  module.exports = mongoose.model('Factura', Factura);
+export default mongoose.model('Factura', Factura);

@@ -1,4 +1,6 @@
-const Pedido = new Schema({
+import mongoose from "mongoose";
+
+const Pedido = new mongoose.Schema({
     tienda_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tienda', required: true },
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     estado: { type: String, enum: ['pendiente', 'completado', 'cancelado'], default: 'pendiente' },
@@ -13,6 +15,6 @@ const Pedido = new Schema({
     ]
   });
   
-  module.exports = mongoose.model('Pedido', Pedido);
+export default mongoose.model('Pedido', Pedido);
 
 
