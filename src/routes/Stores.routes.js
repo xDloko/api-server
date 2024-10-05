@@ -3,12 +3,26 @@ import { storeRegister, registrarProducto, añadirProductos, login, storelogout,
 import { storeRequired } from '../middlewares/storeValidate.js'
 
 const router = Router()
-
-router.post("/registro-tiendas", storeRegister)
-router.post("/producto", registrarProducto)
-router.post("/productos-update", storeRequired, añadirProductos)
+/** Tiendas */
+router.post("/tienda-register", storeRegister)
 router.post("/tienda-login", login)
 router.post("/tienda-logout", storelogout)
-router.get("/tienda-all", obtenerTiendas)
+/** Menus */
+router.post("/tienda-crearmenu", crearMenu)
+router.post("/tienda-editarmenu", editarMenu)
+router.post("/tienda-vermenu", obtenerMenus)
+router.post("/tienda-eliminarmenu", eliminarMenu)
+/** Productos */
+router.post("/tienda-crearproducto", crearProducto)
+router.post("/tienda-editarproducto", editarProducto)
+router.post("/tienda-verproductos", obtenerProductos)
+router.post("/tienda-eliminarproducto", eliminarProducto)
+/** admin */
+router.post("/admin-vertiendas", obtenerTiendas)
+router.post("/admin-vertienda", obtenerTienda)
+router.post("/producto", obtenerTiendas)
+router.post("/producto", obtenerTiendas)
+
+
 
 export default router;

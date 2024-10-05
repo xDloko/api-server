@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
-
-const storeSchema = new mongoose.Schema({
-    tienda: { type: String, required: true, unique: true, trim: true},
-    email: { type: String, required: true, trim: true, unique: true },
-    password :{ type: String, required: true },
-    dueño :{ type: String, required: true },
-    direccion :{ type: String, required: true },
-},{timestamps: true
-})
-
-export default mongoose.model('Store',  storeSchema)
+const TiendaSchema = new Schema({
+    name: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    direccion: { type: String },
+    ubicacion: { type: String },
+    imagen: { type: String },
+    descripcion: { type: String },
+    propietario: { type: string, required: true }
+  });
+  
+  module.exports = mongoose.model('Tienda', TiendaSchema);

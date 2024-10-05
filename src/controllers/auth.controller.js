@@ -60,13 +60,22 @@ export const logout = (req, res)=>{
     return res.sendStatus(200);
 }
 
+/** debe ir para admin */
+
 export const profile = async (req, res)=>{
-    const userFound = await User.findById(req.user.id)
+  try {
+    const user = req.body
+    const userFound = await User.findById(user.id)
     if (!userFound)
         return res.status(404).json({message: 'user not found'})
     res.json({
       id: userFound._id,
       username: userFound.username,
-      email: userFound.email
-    })
+      email: userFound.email,
+      direccion: userFound.direccion,
+      telefono: userFound.telefono
+    }) 
+  } catch {
+    res.status(500).json({message: error.message})
+  }
 }

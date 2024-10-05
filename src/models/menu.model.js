@@ -1,15 +1,9 @@
-import mongoose from "mongoose";
+const MenuSchema = new Schema({
+  tienda_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tienda', required: true },
+  name: { type: String, required: true },
+  descripcion: { type: String },
+  categoria: { type: string, enum: ['cliente', 'tienda'], required: true }
+  
+});
 
-const menuSchema = new mongoose.Schema({
-    tienda: { type: String, required: true },
-    producto: [
-      {
-        nombre: { type: String, required: true },
-        precio: { type: Number, required: true },
-        categoria: { type: String }
-      }
-    ]
-  }, { timestamps: true });
-  
-  export default mongoose.model('Menu', menuSchema);
-  
+module.exports = mongoose.model('Menu', MenuSchema);

@@ -1,129 +1,41 @@
-import Store from "../models/store.model.js";
+import Tienda from "../models/store.model.js";
+import Producto from '../models/producto.model.js'
 import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
 import { storecreateAccesToken } from '../libs/jwt-store.js'
 
+
+/** Tienda  */
+
 export const storeRegister = async (req, res) => {
-  const { email, password, tienda, dueño, direccion } = req.body;
+  const { name, email, password, direccion, ubicacion, descripcion, propietario } = req.body;
 
   try {
     const passwordHash = await bcypt.hash(password, 10);
-    const newStore = new Store({
-      tienda,
-      password: passwordHash,
+    const newTienda = new Tienda({
+      name, 
       email,
-      dueño,
-      direccion,
+      password: passwordHash, 
+      direccion, 
+      ubicacion, 
+      descripcion, 
+      propietario
     });
-
-    const storeSaved = await newStore.save();
+    
+    const storeSaved = await newTienda.save();
     const token = await storecreateAccesToken({ id: storeSaved._id });
-
+    
     res.cookie("token", token);
-
-    res.json({
-      id: storeSaved._id,
-      username: storeSaved.username,
-      email: storeSaved.email,
-    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
-
-export const obtenerTodoMenu= async ( req, res )=>{
-  const task = await Menu.find()
-  res.json(Menu)
-}
-
-export const ObtenerUnMenu = async (req, res) => {
-  try {
-    const { producto } = req.body;
-
-    const productoEncontrado = await Menu.findOne({ "producto.nombre": producto });
-
-    if (!productoEncontrado) {
-      return res.status(404).json({ message: 'Producto no encontrado' });
-    }
-
-    res.json(productoEncontrado);
-  } catch (error) {
-    res.status(500).json({ message: 'Error al buscar el producto', error });
-  }
-};
-
-export const eliminarProducto = async (req, res) => {
-  const { producto } = req.body;
-  const elementoEliminar = await Menu.findOneAndDelete({'producto.nombre': producto})
-  if(!elementoEliminar) res.status(404).json({message: 'no se ha encontrado el elemento'})
-  res.json('producto eliminado ',elementoEliminar)
-}
-
-export const registrarProducto = async (req, res) => {
-  const { tienda, producto } = req.body;
-
-  try {
-    const newMenu = new Menu({
-      tienda,
-      producto,
-    });
-
-    const MenuSaved = await newMenu.save();
-    const token = await storecreateAccesToken({ id: MenuSaved._id });
-
-    res.cookie("token", token);
-
-    res.json({
-      id: MenuSaved._id,
-      tienda: MenuSaved.tienda,
-      producto: MenuSaved.producto,
-    });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const añadirProductos = async (req, res) => {
-  const { tienda, nombre, precio, categoria } = req.body;
-
-  try {
-    // Buscar el menú por el nombre de la tienda
-    const menu = await Menu.findOne({ tienda });
-
-    // Verificar si el menú existe
-    if (!menu) {
-      return res.status(404).json({ message: "Tienda no encontrada" });
-    }
-
-    // Asegurarse de que "producto" sea un array
-    if (!Array.isArray(menu.producto)) {
-      menu.producto = []; // Inicializar como array si no lo es
-    }
-
-    // Agregar el nuevo producto al array "producto"
-    menu.producto.push({
-      nombre,
-      precio,
-      categoria,
-    });
-
-    // Guardar el menú actualizado
-    const menuSaved = await menu.save();
-
-    // Responder con el menú guardado
-    res.status(200).json(menuSaved);
-  } catch (error) {
-    // Manejar cualquier error
-    res.status(500).json({ message: error.message });
-  }
-};
-
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const storeFound = await Store.findOne({ email });
+    const storeFound = await Tienda.findOne({ email });
     if (!storeFound) {
       return res.status(400).json({ message: 'User not found' });
     }
@@ -151,14 +63,156 @@ export const login = async (req, res) => {
   }
 };
 
-
 export const storelogout = (req, res)=>{
   res.cookie('token', "", {
       espires: new Date(0)
   })
 
   return res.sendStatus(200);
+};
+
+/** Menus  */
+
+export const crearMenu = async (req, res) => {
+  const { tienda_id, name, descripccion } = req.body;
+
+  try {
+    const newMenu = new Menu({
+      tienda_id,
+      name,
+      descripccion,
+    });
+
+    await newMenu.save();
+    return res.status(200).json({ message: "ok"});
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const editarMenu = async (req, res) => {
+  try {
+    const { name, descripccion, id } = req.body;
+    let menu = await Menu.findById(id);
+    if (!menu) {
+      return res.status(404).json({ message: 'Menu no encontrado' });
+    }
+    if (name) Menu.name = name;
+    if (descripcion) Menu.descripccion = descripccion;
+    await Menu.save();
+    res.json({
+      message: 'Menu actualizado exitosamente ',
+      menu
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el menú' });
+  }
+};
+
+
+export const obtenerMenus= async ( req, res )=>{
+  try {
+    const { tienda_id } = req.body
+    const menus = await Menu.find({ tienda_id });
+    if (!menus.length) {
+      return res.status(404).json({ message: 'No se encontraron menús para esta tienda' });
+    }
+    res.status(200).json(menus);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
+
+export const eliminarMenu = async (req, res) => {
+  const { menu_id } = req.body;
+  const elementoEliminar = await Menu.findOneAndDelete(menu_id)
+  if(!elementoEliminar) res.status(404).json({message: 'no se ha encontrado el elemento'})
+    res.json('producto eliminado ',elementoEliminar)
+
+};
+
+/** Productos  */
+
+
+
+export const crearProducto = async (req, res) => {
+  const { menu_id, name, precio, categoria, descripcion } = req.body;
+  
+  try {
+
+    const newProducto = new Producto({
+      menu_id,
+      name,
+      precio,
+      categoria,
+      descripcion
+    });
+
+    await newProducto.save();
+    res.status(200).json('ok');
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const editarProducto = async (req, res) => {
+  try {
+    const { menu_id, name, precio, categoria, descripcion } = req.body;
+    let producto = await Producto.findById(id);
+    if (!producto) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+    if (menu_id) Producto.name = name;
+    if (name) Producto.descripccion = descripccion;
+    if (precio) Producto.name = name;
+    if (categoria) Producto.descripccion = descripccion;
+    if (descripcion) Producto.descripccion = descripccion;
+    await Producto.save();
+    res.json({
+      message: 'Menu actualizado exitosamente ',
+      menu
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el menú' });
+  }
+};
+
+export const obtenerProductos= async ( req, res )=>{
+  try {
+    const menu = req.body
+    const productoFind = await Producto.find( menu.id );
+    if (!productoFind.length) {
+      return res.status(404).json({ message: 'No se encontraron productos en este menu' });
+    }
+    res.status(200).json(productoFind);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const eliminarProducto = async (req, res) => {
+  try {
+    const { producto_id } = req.body;
+
+    const elementoEliminar = await Producto.findByIdAndDelete(producto_id);
+
+    if (!elementoEliminar) {
+      return res.status(404).json({ message: 'No se ha encontrado el elemento' });
+    }
+
+    return res.status(200).json('OK');
+    
+  } catch (error) {
+    return res.status(500).json({ message: 'Error al eliminar el producto', error });
+  }
+};
+
+
+/** Admin  */
 
 export const obtenerTiendas= async ( req, res )=>{
   const task = await Store.find()
@@ -178,3 +232,19 @@ export const obtenerTienda= async ( req, res )=>{
     res.status(500).json({ message: 'Error del servidor', error });
   }
 }
+
+export const ObtenerUnMenu = async (req, res) => {
+  try {
+    const { menu } = req.body;
+
+    const menuEncontrado = await Menu.findOne({ "tienda_id": tienda.tienda_id.categoria });
+
+    if (!productoEncontrado) {
+      return res.status(404).json({ message: 'Producto no encontrado' });
+    }
+
+    res.json(productoEncontrado);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al buscar el producto', error });
+  }
+};
