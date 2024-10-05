@@ -1,4 +1,4 @@
-const MenuSchema = new Schema({
+const Menu = new Schema({
   tienda_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Tienda', required: true },
   name: { type: String, required: true },
   descripcion: { type: String },
