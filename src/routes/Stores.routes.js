@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { 
-    storeRegister, login, storelogout, obtenerTiendas,
+    storeRegister, login, storelogout, obtenerTiendas, obtenerTienda,
     crearMenu, editarMenu, obtenerMenus, eliminarMenu,
     crearProducto, editarProducto, obtenerProductos, eliminarProducto
 } from '../controllers/store.controller.js'
@@ -24,7 +24,6 @@ router.post("/tienda-eliminarproducto", eliminarProducto)
 /** admin */
 router.post("/admin-vertiendas", obtenerTiendas)
 router.post("/admin-vertienda", obtenerTienda)
-router.post("/producto", obtenerTiendas)
 
 
 
