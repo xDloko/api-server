@@ -26,6 +26,10 @@ export const storeRegister = async (req, res) => {
     const token = await storecreateAccesToken({ id: storeSaved._id });
     
     res.cookie("token", token);
+    res.json({
+      id: storeSaved._id,
+      email: storeSaved.name,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
