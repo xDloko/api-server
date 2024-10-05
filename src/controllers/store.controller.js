@@ -11,7 +11,7 @@ export const storeRegister = async (req, res) => {
   const { name, email, password, direccion, ubicacion, descripcion, propietario } = req.body;
 
   try {
-    const passwordHash = await bcypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const newTienda = new Tienda({
       name, 
       email,
