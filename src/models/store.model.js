@@ -8,7 +8,7 @@ const Tienda = new mongoose.Schema({
     ubicacion: { type: String },
     imagen: { type: String },
     descripcion: { type: String },
-    propietario: { type: string, required: true }
+    propietario: { type: String, required: true }
   });
   
 export default mongoose.model('Tienda', Tienda);
