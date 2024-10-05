@@ -121,7 +121,6 @@ export const obtenerMenus= async ( req, res )=>{
   try {
     const { tienda_id } = req.body
     const menus = await Menu.find({tienda_id});
-    console.log("ID de tienda recibido:", tienda_id);
     if (!menus.length) {
       return res.status(404).json({ message: 'No se encontraron menús para esta tienda' });
     }
