@@ -10,4 +10,4 @@ const User = new Schema({
   telefono: { type: String },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', User);

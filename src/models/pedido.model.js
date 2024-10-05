@@ -13,6 +13,6 @@ const Pedido = new Schema({
     ]
   });
   
-  module.exports = mongoose.model('Pedido', PedidoSchema);
+  module.exports = mongoose.model('Pedido', Pedido);
 
 

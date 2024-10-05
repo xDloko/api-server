@@ -12,4 +12,4 @@ const Factura = new Schema({
     ]
   });
   
-  module.exports = mongoose.model('Factura', FacturaSchema);
+  module.exports = mongoose.model('Factura', Factura);

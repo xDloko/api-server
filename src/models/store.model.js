@@ -9,4 +9,4 @@ const Tienda = new Schema({
     propietario: { type: string, required: true }
   });
   
-  module.exports = mongoose.model('Tienda', TiendaSchema);
+  module.exports = mongoose.model('Tienda', Tienda);
