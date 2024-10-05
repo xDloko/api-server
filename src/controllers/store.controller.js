@@ -1,5 +1,4 @@
 import Tienda from "../models/store.model.js";
-import Menu from "../models/menu.model.js"
 import Producto from '../models/producto.model.js'
 import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
