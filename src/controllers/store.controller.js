@@ -166,12 +166,11 @@ export const crearProducto = async (req, res) => {
 
 export const editarProducto = async (req, res) => {
   try {
-    const { menu_id, name, precio, categoria, descripcion } = req.body;
-    let producto = await Producto.findById(id);
+    const { producto_id, name, precio, categoria, descripcion } = req.body;
+    let producto = await Producto.findById(producto_id);
     if (!producto) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
-    if (menu_id) Producto.name = name;
     if (name) Producto.descripccion = descripccion;
     if (precio) Producto.name = name;
     if (categoria) Producto.descripccion = descripccion;
@@ -179,7 +178,7 @@ export const editarProducto = async (req, res) => {
     await Producto.save();
     res.json({
       message: 'Menu actualizado exitosamente ',
-      menu
+      producto
     });
   } catch (error) {
     console.error(error);
