@@ -104,7 +104,7 @@ export const editarMenu = async (req, res) => {
       return res.status(404).json({ message: 'Menu no encontrado' });
     }
     if (name) menu.name = name; 
-    if (descripcion) menu.descripccion = descripcion; 
+    if (descripcion) menu.descripcion = descripcion; 
     if (categoria) menu.categoria = categoria; 
     await menu.save(); 
     res.json({
@@ -133,7 +133,7 @@ export const obtenerMenus= async ( req, res )=>{
 
 export const eliminarMenu = async (req, res) => {
   const { menu } = req.body;
-  const elementoEliminar = await Menu.findOneAndDelete(menu)
+  const elementoEliminar = await Menu.findByIdAndDelete(menu)
   if(!elementoEliminar) res.status(404).json({message: 'no se ha encontrado el elemento'})
 
     res.status(200).json({ message: 'Producto eliminado' });
