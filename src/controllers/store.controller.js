@@ -171,10 +171,10 @@ export const editarProducto = async (req, res) => {
     if (!producto) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
-    if (name) Producto.descripccion = descripccion;
-    if (precio) Producto.name = name;
-    if (categoria) Producto.descripccion = descripccion;
-    if (descripcion) Producto.descripccion = descripccion;
+    if (name) Producto.name = name;
+    if (precio) Producto.precio = precio;
+    if (categoria) Producto.categoria = categoria;
+    if (descripcion) Producto.descripcion = descripcion;
     await Producto.save();
     res.json({
       message: 'Menu actualizado exitosamente ',
