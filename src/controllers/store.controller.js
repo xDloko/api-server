@@ -175,10 +175,9 @@ export const editarProducto = async (req, res) => {
     if (precio) producto.precio = precio;
     if (categoria) producto.categoria = categoria;
     if (descripcion) producto.descripcion = descripcion;
-    await Producto.save();
+    await producto.save();
     res.json({
       message: 'Menu actualizado exitosamente ',
-      producto
     });
   } catch (error) {
     console.error(error);
