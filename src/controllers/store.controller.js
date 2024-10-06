@@ -98,14 +98,15 @@ export const crearMenu = async (req, res) => {
 
 export const editarMenu = async (req, res) => {
   try {
-    const { name, descripccion, id } = req.body; // Correcto aquí
+    const { name, descripcion, categoria, id } = req.body; // Correcto aquí
     let menu = await Menu.findById(id);
     if (!menu) {
       return res.status(404).json({ message: 'Menu no encontrado' });
     }
-    if (name) menu.name = name; // Cambié Menu.name a menu.name
-    if (descripccion) menu.descripccion = descripccion; // Cambié Menu.descripccion a menu.descripccion
-    await menu.save(); // Cambié Menu.save() a menu.save()
+    if (name) menu.name = name; 
+    if (descripcion) menu.descripccion = descripcion; 
+    if (categoria) menu.categoria = categoria; 
+    await menu.save(); 
     res.json({
       message: 'Menu actualizado exitosamente ',
       menu
