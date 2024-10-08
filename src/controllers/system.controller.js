@@ -11,10 +11,10 @@ export const login = async (req, res) => {
         if (!userFound) return res.status(400).json({message: 'user not found'})
   
         const isMatch1 = await bcypt.compare(password, userFound.password);
-        if (!isMatch1) return res.status(400).json({message: 'invalid credencials'})
+        if (!isMatch1) return res.status(400).json({message: 'invalid credencials Password'})
 
         const isMatch2 = await bcypt.compare(pass, userFound.pass);
-        if (!isMatch2) return res.status(400).json({message: 'invalid credencials'})
+        if (!isMatch2) return res.status(400).json({message: 'invalid credencials Pass'})
   
         const token = await createAccesToken({id: userFound._id})
       
