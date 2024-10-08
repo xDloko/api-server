@@ -139,6 +139,13 @@ export const editUser = async (req, res) => {
   }
 };
 
+export const deleteUser = async (req, res) => {
+  const { id } = req.body;
+  const elementoEliminar = await User.findByIdAndDelete(id)
+  if(!elementoEliminar) res.status(404).json({message: 'No se ha encontrado el User'})
+    res.status(200).json({ message: 'User eliminado' });
+};
+
 
 /** Tienda */
 
