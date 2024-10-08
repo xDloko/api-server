@@ -134,8 +134,6 @@ export const editStores = async (req, res) => {
   try {
     const {  id, name, email, password, direccion, ubicacion, descripcion, propietario} = req.body;
     let store = await Tienda.findById(id);
-    console.log(id);
-    console.log(store);
     const passwordHash = await bcrypt.hash(password, 10);
     if (!store) {
       return res.status(404).json({ message: 'Store no encontrado' });
@@ -160,7 +158,7 @@ export const editStores = async (req, res) => {
 
 export const deleteStore = async (req, res) => {
   const { store_id } = req.body;
-  const elementoEliminar = await Store.findByIdAndDelete(store_id)
+  const elementoEliminar = await Tienda.findByIdAndDelete(store_id)
   if(!elementoEliminar) res.status(404).json({message: 'No se ha encontrado la Store'})
     res.status(200).json({ message: 'Store eliminado' });
 };
