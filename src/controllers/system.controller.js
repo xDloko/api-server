@@ -1,5 +1,5 @@
 import Useradmin from "../models/useradmin.model.js";
-import bcypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { createAccesToken } from "../libs/jwt.js";
 
 export const login = async (req, res) => {
