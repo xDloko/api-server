@@ -1,5 +1,6 @@
 import Useradmin from "../models/useradmin.model.js";
 import Tienda from "../models/store.model.js";
+import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { createAccesToken } from "../libs/jwt-admin.js";
 
@@ -58,6 +59,26 @@ export const adminregister = async (req, res) => {
   }
 };
 
+/** Users */
+
+export const obtainUsers= async ( req, res )=>{
+  const task = await User.find()
+  res.status(200).json(task)
+}
+
+export const obtainUser= async ( req, res )=>{
+  try {
+    const { user_id } = req.params;
+    const task = await Tienda.findOne({ id: user_id }); 
+    if (!task) {
+      return res.status(402).json({ message: 'User no encontrado' });
+    }
+    res.status(200).json(task);
+    console.log(task);
+  } catch (error) {
+    res.status(500).json({ message: 'Error del servidor', error });
+  }
+}
 
 
 /** Tienda */
