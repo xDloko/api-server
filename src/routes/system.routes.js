@@ -6,7 +6,7 @@ import {
 const router = Router()
 router.post("/system-login", login)
 router.post("/system-register", adminregister)
-router.post("/system-stores", obtainStores)
+router.get("/system-stores", obtainStores)
 router.post("/system-store", obtainStore)
 
 export default router;
