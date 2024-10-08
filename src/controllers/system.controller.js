@@ -2,6 +2,9 @@ import Useradmin from "../models/useradmin.model.js";
 import bcrypt from "bcryptjs";
 import { createAccesToken } from "../libs/jwt-admin.js";
 
+
+/** Admin  */
+
 export const login = async (req, res) => {
     const { email, password, pass } = req.body;
   
@@ -53,3 +56,27 @@ export const adminregister = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+
+/** Tienda */
+
+export const obtainStores= async ( res )=>{
+  const task = await Store.find()
+  res.status(200).json(task)
+}
+
+export const obtainStore= async ( req, res )=>{
+  try {
+    const { tienda } = req.params;
+    const task = await Store.findOne({ tienda: tienda }); 
+    if (!task) {
+      return res.status(402).json({ message: 'Tienda no encontrada' });
+    }
+    res.status(200).json(task);
+    console.log(task);
+  } catch (error) {
+    res.status(500).json({ message: 'Error del servidor', error });
+  }
+}
+

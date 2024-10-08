@@ -22,8 +22,7 @@ router.post("/tienda-editarproducto", editarProducto)
 router.post("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
 /** admin */
-router.post("/admin-vertiendas", obtenerTiendas)
-router.post("/admin-vertienda", obtenerTienda)
+
 
 
 
