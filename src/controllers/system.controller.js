@@ -62,7 +62,7 @@ export const adminregister = async (req, res) => {
 
 /** Tienda */
 
-export const obtainStores= async ( res )=>{
+export const obtainStores= async ( req, res )=>{
   const task = await Tienda.find()
   res.status(200).json(task)
 }
