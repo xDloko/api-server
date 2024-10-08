@@ -27,3 +27,29 @@ export const login = async (req, res) => {
       res.status(500).json({message: error.message})
     }
   };
+
+export const adminregister = async (req, res) => {
+  const { username, email, password, pass } = req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const passHash = await bcrypt.hash(pass, 10);
+    const newadmin = new Useradmin({
+      email,
+      username,
+      password: passwordHash,
+      pass: passHash
+    });
+    
+    const adminsaved = await newadmin.save();
+    const token = await storecreateAccesToken({ id: adminsaved._id });
+    
+    res.cookie("token", token);
+    res.json({
+      id: adminsaved._id,
+      email: adminsaved.name,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
