@@ -84,7 +84,7 @@ export const registerUser = async (req, res) => {
   const { email,  username, password, direccion, ubicacion, telefono } = req.body;
 
   try {
-    const passwordHash = await bcypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new User({
       email,
       username,
