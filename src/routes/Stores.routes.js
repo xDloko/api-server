@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { 
-    storeRegister, login, storelogout, obtenerTiendas, obtenerTienda,
+    storeRegister, login, storelogout,
     crearMenu, editarMenu, obtenerMenus, eliminarMenu,
     crearProducto, editarProducto, obtenerProductos, eliminarProducto
 } from '../controllers/store.controller.js'
