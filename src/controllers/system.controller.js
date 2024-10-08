@@ -97,7 +97,6 @@ export const storeRegister = async (req, res) => {
     });
     
     const storeSaved = await newTienda.save();
-    const token = await storecreateAccesToken({ id: storeSaved._id });
     
     res.json({
       id: storeSaved._id,
