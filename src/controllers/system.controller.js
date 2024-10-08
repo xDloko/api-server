@@ -80,6 +80,33 @@ export const obtainUser= async ( req, res )=>{
   }
 }
 
+export const registerUser = async (req, res) => {
+  const { email, password, username } = req.body;
+
+  try {
+    const passwordHash = await bcypt.hash(password, 10);
+    const newUser = new User({
+      username,
+      password: passwordHash,
+      email,
+    });
+
+    const userSaved = await newUser.save();
+    const token = await createAccesToken({id: userSaved._id})
+    
+    res.cookie('token', token)   
+
+    res.json({
+      id: userSaved._id,
+      username: userSaved.username,
+      password: userSaved.password,
+      email: userSaved.email,
+    });
+  } catch (error) {
+    res.status(500).json({message: error.message})
+  }
+};
+
 
 /** Tienda */
 
