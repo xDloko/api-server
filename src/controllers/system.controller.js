@@ -134,6 +134,8 @@ export const editStores = async (req, res) => {
   try {
     const {  id, name, email, password, direccion, ubicacion, descripcion, propietario} = req.body;
     let store = await Tienda.findById(id);
+    console.log(id);
+    console.log(store);
     const passwordHash = await bcrypt.hash(password, 10);
     if (!store) {
       return res.status(404).json({ message: 'Store no encontrado' });
