@@ -81,14 +81,17 @@ export const obtainUser= async ( req, res )=>{
 }
 
 export const registerUser = async (req, res) => {
-  const { email, password, username } = req.body;
+  const { email,  username, password, direccion, ubicacion, telefono } = req.body;
 
   try {
     const passwordHash = await bcypt.hash(password, 10);
     const newUser = new User({
+      email,
       username,
       password: passwordHash,
-      email,
+      direccion,
+      ubicacion,
+      telefono,
     });
 
     const userSaved = await newUser.save();
@@ -98,9 +101,12 @@ export const registerUser = async (req, res) => {
 
     res.json({
       id: userSaved._id,
+      email: userSaved.email,
       username: userSaved.username,
       password: userSaved.password,
-      email: userSaved.email,
+      direccion: userSaved.direccion,
+      ubicacion: userSaved.ubicacion,
+      telefono: userSaved.telefono,
     });
   } catch (error) {
     res.status(500).json({message: error.message})
