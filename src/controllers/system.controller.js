@@ -129,16 +129,18 @@ export const storeRegister = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
+ 
 export const editStores = async (req, res) => {
   try {
-    const {  id, name, email, direccion, ubicacion, descripcion, propietario} = req.body;
+    const {  id, name, email, password, direccion, ubicacion, descripcion, propietario} = req.body;
     let store = await Tienda.findById(id);
+    const passwordHash = await bcrypt.hash(password, 10);
     if (!store) {
       return res.status(404).json({ message: 'Store no encontrado' });
     }
     if (name) store.name = name; 
-    if (email) store.email = email; 
+    if (email) store.email = email;
+    if (password) store.password = passwordHash;
     if (direccion) store.direccion = direccion; 
     if (ubicacion) store.ubicacion = ubicacion; 
     if (descripcion) store.descripcion = descripcion; 
