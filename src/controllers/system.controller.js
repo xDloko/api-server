@@ -1,6 +1,6 @@
 import Useradmin from "../models/useradmin.model.js";
 import bcrypt from "bcryptjs";
-import { createAccesToken } from "../libs/jwt.js";
+import { createAccesToken } from "../libs/jwt-admin.js";
 
 export const login = async (req, res) => {
     const { email, password, pass } = req.body;
@@ -42,7 +42,7 @@ export const adminregister = async (req, res) => {
     });
     
     const adminsaved = await newadmin.save();
-    const token = await storecreateAccesToken({ id: adminsaved._id });
+    const token = await createAccesToken({ id: adminsaved._id });
     
     res.cookie("token", token);
     res.json({
