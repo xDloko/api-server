@@ -9,7 +9,8 @@ import {
     deleteStore,
     obtainUsers,
     obtainUser,
-    registerUser, 
+    registerUser,
+    editUser, 
 } from '../controllers/system.controller.js'
 
 const router = Router()
@@ -20,6 +21,7 @@ router.post("/system-register", adminregister)
 router.get("/system-users", obtainUsers)
 router.post("/system-user", obtainUser)
 router.post("/system-user-register", registerUser)
+router.post("/system-user-edit", editUser)
 
 /** store */
 router.get("/system-stores", obtainStores)

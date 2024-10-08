@@ -113,6 +113,32 @@ export const registerUser = async (req, res) => {
   }
 };
 
+export const editUser = async (req, res) => {
+  try {
+    const {  id, name, email, password, direccion, ubicacion, descripcion, propietario} = req.body;
+    let user = await User.findById(id);
+    const passwordHash = await bcrypt.hash(password, 10);
+    if (!user) {
+      return res.status(404).json({ message: 'User no encontrado' });
+    }
+    if (name) user.name = name; 
+    if (email) user.email = email;
+    if (password) user.password = passwordHash;
+    if (direccion) user.direccion = direccion; 
+    if (ubicacion) user.ubicacion = ubicacion; 
+    if (descripcion) user.descripcion = descripcion; 
+    if (propietario) user.propietario = propietario; 
+    await user.save(); 
+    res.json({
+      message: 'User actualizado exitosamente ',
+      user
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el User' });
+  }
+};
+
 
 /** Tienda */
 
