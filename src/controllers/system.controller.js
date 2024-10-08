@@ -109,3 +109,34 @@ export const storeRegister = async (req, res) => {
   }
 };
 
+export const editStores = async (req, res) => {
+  try {
+    const {  id, name, email, direccion, ubicacion, descripcion, propietario} = req.body;
+    let store = await Tienda.findById(id);
+    if (!store) {
+      return res.status(404).json({ message: 'Store no encontrado' });
+    }
+    if (name) store.name = name; 
+    if (email) store.email = email; 
+    if (direccion) store.direccion = direccion; 
+    if (ubicacion) store.ubicacion = ubicacion; 
+    if (descripcion) store.descripcion = descripcion; 
+    if (propietario) store.propietario = propietario; 
+    await store.save(); 
+    res.json({
+      message: 'Store actualizado exitosamente ',
+      store
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar La Store' });
+  }
+};
+
+export const deleteStore = async (req, res) => {
+  const { store_id } = req.body;
+  const elementoEliminar = await Store.findByIdAndDelete(store_id)
+  if(!elementoEliminar) res.status(404).json({message: 'No se ha encontrado la Store'})
+    res.status(200).json({ message: 'Store eliminado' });
+};
+
