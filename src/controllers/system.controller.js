@@ -81,3 +81,30 @@ export const obtainStore= async ( req, res )=>{
   }
 }
 
+export const storeRegister = async (req, res) => {
+  const { name, email, password, direccion, ubicacion, descripcion, propietario } = req.body;
+
+  try {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const newTienda = new Tienda({
+      name, 
+      email,
+      password: passwordHash, 
+      direccion, 
+      ubicacion, 
+      descripcion, 
+      propietario
+    });
+    
+    const storeSaved = await newTienda.save();
+    const token = await storecreateAccesToken({ id: storeSaved._id });
+    
+    res.json({
+      id: storeSaved._id,
+      email: storeSaved.name,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
