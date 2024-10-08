@@ -100,6 +100,8 @@ export const storeRegister = async (req, res) => {
     
     res.json({
       id: storeSaved._id,
+      username: storeSaved.username,
+      propietario: storeSaved.propietario,
       email: storeSaved.name,
     });
   } catch (error) {
