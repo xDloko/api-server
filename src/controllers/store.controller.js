@@ -1,5 +1,6 @@
 import Tienda from "../models/store.model.js";
 import Producto from '../models/producto.model.js'
+import Pedido from '../models/pedido.model.js'
 import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
 import { storecreateAccesToken } from '../libs/jwt-store.js'
