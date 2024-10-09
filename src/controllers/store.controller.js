@@ -224,7 +224,7 @@ export const eliminarProducto = async (req, res) => {
 export const obtenerPedidos= async ( req, res )=>{
   try {
     const { tienda_id } = req.body
-    const pedido = await Pedido.find({tienda_id});
+    const pedido = await Pedido.find({tienda_id}).populate('productos.producto_id');
     if (!pedido.length) {
       return res.status(404).json({ message: 'No se encontraron pedidos para esta tienda' });
     }
