@@ -8,7 +8,7 @@ import { storecreateAccesToken } from '../libs/jwt-store.js'
 /** Tienda  */
 
 export const storeRegister = async (req, res) => {
-  const { name, email, password, direccion, ubicacion, descripcion, propietario } = req.body;
+  const { name, email, password, direccion, propietario } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -16,9 +16,7 @@ export const storeRegister = async (req, res) => {
       name, 
       email,
       password: passwordHash, 
-      direccion, 
-      ubicacion, 
-      descripcion, 
+      direccion,   
       propietario
     });
     
