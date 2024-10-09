@@ -41,11 +41,13 @@ export const login = async (req, res) => {
   try {
     const storeFound = await Tienda.findOne({ email });
     if (!storeFound) {
+      console.log("error1");
       return res.status(400).json({ message: 'User not found' });
     }
 
     const isMatch = await bcrypt.compare(password, storeFound.password);
     if (!isMatch) {
+      console.log("error2");
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -218,4 +220,54 @@ export const eliminarProducto = async (req, res) => {
   }
 };
 
+/** Pedidos */
 
+export const obtenerPedidos= async ( req, res )=>{
+  try {
+    const { tienda_id } = req.body
+    const pedido = await Pedido.find({tienda_id});
+    if (!pedido.length) {
+      return res.status(404).json({ message: 'No se encontraron pedidos para esta tienda' });
+    }
+    res.status(200).json(pedido);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export const aceptarPedido = async (req, res) => {
+  try {
+    const { pedido_id } = req.body;
+
+    const elemento = await Producto.findByIdAndDelete(pedido_id);
+
+    if (!elemento) {
+      return res.status(404).json({ message: 'No se ha encontrado el Pedido' });
+    }
+
+
+
+
+    return res.status(200).json('OK');
+    
+  } catch (error) {
+    return res.status(500).json({ message: 'Error al eliminar el Pedido', error });
+  }
+};
+
+export const eliminarPedido = async (req, res) => {
+  try {
+    const { pedido_id } = req.body;
+
+    const elementoEliminar = await Producto.findByIdAndDelete(pedido_id);
+
+    if (!elementoEliminar) {
+      return res.status(404).json({ message: 'No se ha encontrado el Pedido' });
+    }
+
+    return res.status(200).json('OK');
+    
+  } catch (error) {
+    return res.status(500).json({ message: 'Error al eliminar el Pedido', error });
+  }
+};
