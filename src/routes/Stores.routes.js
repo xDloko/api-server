@@ -5,7 +5,9 @@ import {
     crearProducto, editarProducto, obtenerProductos, eliminarProducto,
     obtenerPedidos,
     eliminarPedido,
-    aceptarPedido
+    aceptarPedido,
+    deletePedido,
+    aceptPedido
 } from '../controllers/store.controller.js'
 import { storeRequired } from '../middlewares/storeValidate.js'
 
@@ -26,8 +28,8 @@ router.post("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
 /** Pedidos */
 router.post("/tienda-verpedidos", obtenerPedidos)
-router.post("/tienda-deletepedidos", eliminarPedido)
-router.post("/tienda-acceptpedidos", aceptarPedido)
+router.post("/tienda-deletepedidos", deletePedido)
+router.post("/tienda-acceptpedidos", aceptPedido)
 /** admin */
 
 

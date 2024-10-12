@@ -3,6 +3,8 @@ import Producto from '../models/producto.model.js'
 import Pedido from '../models/pedido.model.js'
 import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
+import express from 'express';
+import Factura from '../models/factura.model.js';  
 import { storecreateAccesToken } from '../libs/jwt-store.js'
 
 
@@ -234,11 +236,11 @@ export const obtenerPedidos= async ( req, res )=>{
   }
 }
 
-export const aceptarPedido = async (req, res) => {
+export const deletePedido = async (req, res) => {
   try {
     const { pedido_id } = req.body;
 
-    const elemento = await Producto.findByIdAndDelete(pedido_id);
+    const elemento = await Pedido.findByIdAndDelete(pedido_id);
 
     if (!elemento) {
       return res.status(404).json({ message: 'No se ha encontrado el Pedido' });
@@ -254,19 +256,39 @@ export const aceptarPedido = async (req, res) => {
   }
 };
 
-export const eliminarPedido = async (req, res) => {
+
+
+export const aceptPedido = async (req, res) => {
+  const { pedido_id } = req.body;
+
   try {
-    const { pedido_id } = req.body;
+    // Encontramos el pedido en base al ID (si tienes un modelo de Pedido)
+    const pedido = await Pedido.findById(pedido_id).populate('user_id tienda_id');
 
-    const elementoEliminar = await Producto.findByIdAndDelete(pedido_id);
-
-    if (!elementoEliminar) {
-      return res.status(404).json({ message: 'No se ha encontrado el Pedido' });
+    if (!pedido) {
+      return res.status(404).json({ message: 'Pedido no encontrado' });
     }
 
-    return res.status(200).json('OK');
-    
+    // Creamos la nueva factura
+    const nuevaFactura = new Factura({
+      tienda_id: pedido.tienda_id,
+      user_id: pedido.user_id,
+      total: pedido.total,
+      productos: pedido.productos
+    });
+
+    // Guardamos la factura en la base de datos
+    await nuevaFactura.save();
+
+    // Opcional: actualizamos el estado del pedido a "Aceptado"
+    pedido.estado = 'Aceptado';
+    await pedido.save();
+
+    res.status(201).json({ message: 'Factura creada exitosamente', factura: nuevaFactura });
+
   } catch (error) {
-    return res.status(500).json({ message: 'Error al eliminar el Pedido', error });
+    console.error(error);
+    res.status(500).json({ message: 'Error al crear la factura', error });
   }
 };
+
