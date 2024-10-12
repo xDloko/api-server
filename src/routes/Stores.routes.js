@@ -4,8 +4,6 @@ import {
     crearMenu, editarMenu, obtenerMenus, eliminarMenu,
     crearProducto, editarProducto, obtenerProductos, eliminarProducto,
     obtenerPedidos,
-    eliminarPedido,
-    aceptarPedido,
     deletePedido,
     aceptPedido
 } from '../controllers/store.controller.js'
