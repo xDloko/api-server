@@ -1,6 +1,5 @@
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
-const path = require('path');
 dotenv.config();
 
 const s3 = new AWS.S3({
