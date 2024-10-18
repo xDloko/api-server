@@ -7,8 +7,7 @@ import {
     deletePedido,
     aceptPedido
 } from '../controllers/store.controller.js'
-const upload = require('../Images-SDK/multer.js'); // Donde configuramos multer
-const { uploadToS3 } = require('../Images-SDK/AWS.js');
+import upload from '../Images-SDK/multer.js'; // Donde configuramos multer
 import { storeRequired } from '../middlewares/storeValidate.js'
 
 const router = Router()
