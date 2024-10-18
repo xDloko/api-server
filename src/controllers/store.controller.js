@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import Menu from "../models/menu.model.js";
 import express from 'express';
 import Factura from '../models/factura.model.js';  
+import { uploadToS3 } from '../Images-SDK/AWS.js';
 import { storecreateAccesToken } from '../libs/jwt-store.js'
 
 
