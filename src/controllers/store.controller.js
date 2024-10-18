@@ -8,6 +8,12 @@ import Factura from '../models/factura.model.js';
 import { uploadToS3 } from '../Images-SDK/AWS.js';
 import { storecreateAccesToken } from '../libs/jwt-store.js'
 
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION
+});
+
 
 /** Tienda  */
 
@@ -211,16 +217,23 @@ export const obtenerProductos= async ( req, res )=>{
 export const eliminarProducto = async (req, res) => {
   try {
     const { producto_id } = req.body;
-
-    const elementoEliminar = await Producto.findByIdAndDelete(producto_id);
-
-    if (!elementoEliminar) {
+    const producto = await Producto.findById(producto_id);
+    if (!producto) {
       return res.status(404).json({ message: 'No se ha encontrado el elemento' });
     }
+    const imagenKey = producto.image.split('/').pop();
 
-    return res.status(200).json('OK');
+    await s3.deleteObject({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: `uploads/${imagenKey}` 
+    }).promise();
+
+    await Producto.findByIdAndDelete(producto_id);
+
+    return res.status(200).json({ message: 'Producto eliminado exitosamente' });
     
   } catch (error) {
+    console.error('Error al eliminar el producto:', error);
     return res.status(500).json({ message: 'Error al eliminar el producto', error });
   }
 };

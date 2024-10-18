@@ -10,6 +10,7 @@ const s3 = new AWS.S3({
   
   // Definir la función uploadToS3
   export const uploadToS3 = async (file) => {
+    console.log('Bucket Name:', process.env.AWS_BUCKET_NAME);
     const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,  // Nombre del bucket
       Key: `uploads/${Date.now()}_${file.originalname}`,  // Ruta del archivo en S3
