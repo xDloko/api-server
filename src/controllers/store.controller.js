@@ -154,12 +154,15 @@ export const crearProducto = async (req, res) => {
   
   try {
 
+    const result = await uploadToS3(req.file);
+
     const newProducto = new Producto({
       menu_id,
       name,
       precio,
       categoria,
-      descripcion
+      descripcion,
+      image: result.Location,
     });
 
     await newProducto.save();
@@ -291,4 +294,28 @@ export const aceptPedido = async (req, res) => {
     res.status(500).json({ message: 'Error al crear la factura', error });
   }
 };
+
+// Pruebas de subida imagenes
+router.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+      // Subir imagen a S3
+      const result = await uploadToS3(req.file);
+
+      // El enlace público de la imagen subida
+      const imageUrl = result.Location;
+
+      // Aquí podrías guardar la URL en tu base de datos (MongoDB)
+      // Ejemplo:
+      // const newStore = new Store({ name: req.body.name, image: imageUrl });
+      // await newStore.save();
+
+      res.status(200).json({
+          message: 'Image uploaded successfully!',
+          imageUrl: imageUrl
+      });
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+});
+
 

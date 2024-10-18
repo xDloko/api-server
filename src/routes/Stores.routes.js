@@ -7,6 +7,8 @@ import {
     deletePedido,
     aceptPedido
 } from '../controllers/store.controller.js'
+const upload = require('../Images-SDK/multer.js'); // Donde configuramos multer
+const { uploadToS3 } = require('../Images-SDK/AWS.js');
 import { storeRequired } from '../middlewares/storeValidate.js'
 
 const router = Router()
@@ -20,7 +22,7 @@ router.post("/tienda-editarmenu", editarMenu)
 router.post("/tienda-vermenu", obtenerMenus)
 router.post("/tienda-eliminarmenu", eliminarMenu)
 /** Productos */
-router.post("/tienda-crearproducto", crearProducto)
+router.post("/tienda-crearproducto", upload.single('image'), crearProducto)
 router.post("/tienda-editarproducto", editarProducto)
 router.post("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
