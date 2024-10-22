@@ -8,7 +8,6 @@ import {
     aceptPedido
 } from '../controllers/store.controller.js'
 
-import { getMessages,sendMessage } from '../controllers/system.controller.js';
 import upload from '../Images-SDK/multer.js'; // Donde configuramos multer
 import { storeRequired } from '../middlewares/storeValidate.js'
 
@@ -32,8 +31,7 @@ router.post("/tienda-verpedidos", obtenerPedidos)
 router.post("/tienda-deletepedidos", deletePedido)
 router.post("/tienda-acceptpedidos", aceptPedido)
 /** admin */
-router.get("/get-messages", getMessages);
-router.post("/send-message", sendMessage);
+
 
 
 

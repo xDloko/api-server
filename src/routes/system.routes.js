@@ -14,6 +14,9 @@ import {
     deleteUser, 
 } from '../controllers/system.controller.js'
 
+import { getMessages, sendMessage } from '../controllers/system.controller.js';
+
+
 const router = Router()
 router.post("/system-login", login)
 router.post("/system-register", adminregister)
@@ -31,5 +34,9 @@ router.post("/system-store", obtainStore)
 router.post("/system-store-create", storeRegister)
 router.post("/system-store-edit", editStores)
 router.post("/system-store-delete", deleteStore)
+
+/** chats */
+router.get("/get-messages", getMessages);
+router.post("/send-message", sendMessage);
 
 export default router;
