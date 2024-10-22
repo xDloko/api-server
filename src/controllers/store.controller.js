@@ -295,7 +295,7 @@ export const aceptPedido = async (req, res) => {
       productos: pedido.productos
     });
 
-    console.log("Si corre")
+    console.log("Si corree")
 
     // Guardamos la factura en la base de datos
     await nuevaFactura.save();
