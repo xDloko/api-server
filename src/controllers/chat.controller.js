@@ -1,5 +1,5 @@
 // src/controllers/chat.controller.js
-import Message from '../models/chat.model'
+import Message from '../models/chat.model.js'
 
 // Obtener todos los mensajes
 exports.getMessages = async (req, res) => {
