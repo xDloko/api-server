@@ -5,7 +5,8 @@ import {
     crearProducto, editarProducto, obtenerProductos, eliminarProducto,
     obtenerPedidos,
     deletePedido,
-    aceptPedido
+    aceptPedido,
+    crearPedido
 } from '../controllers/store.controller.js'
 
 import upload from '../Images-SDK/multer.js'; // Donde configuramos multer
@@ -28,6 +29,7 @@ router.post("/tienda-verproductos", obtenerProductos)
 router.post("/tienda-eliminarproducto", eliminarProducto)
 /** Pedidos */
 router.post("/tienda-verpedidos", obtenerPedidos)
+router.post("/tienda-crearpedido", crearPedido)
 router.post("/tienda-deletepedidos", deletePedido)
 router.post("/tienda-acceptpedidos", aceptPedido)
 /** admin */
