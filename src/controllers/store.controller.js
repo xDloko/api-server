@@ -70,6 +70,7 @@ export const login = async (req, res) => {
 
     res.json({
       id: storeFound._id,
+      name: storeFound.name,
       email: storeFound.email,
     });
   } catch (error) {
