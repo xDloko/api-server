@@ -15,9 +15,9 @@ export const getMessages = async (req, res) => {
 export const sendMessage = async (req, res) => {
     const { username, text } = req.body;
 
+    const newMessage = new Message({ username, text });
     
     try {
-        const newMessage = new Message({ username, text });
         await newMessage.save();
         res.status(201).json(newMessage);
     } catch (error) {
