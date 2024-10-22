@@ -254,6 +254,26 @@ export const obtenerPedidos= async ( req, res )=>{
   }
 }
 
+export const crearPedido = async (req, res) => {
+  try {
+    const { tienda_id, user_id, total, productos } = req.body;
+
+    const newPedido = new Pedido({
+      tienda_id,
+      user_id,
+      total,
+      productos,
+    });
+
+    await newPedido.save();
+    res.status(200).json('ok');
+  } catch {
+    console.error('Error al crear el pedido:', error);
+    return res.status(500).json({ message: 'Error al crear el pedido', error });
+  }
+
+}
+
 export const deletePedido = async (req, res) => {
   try {
     const { pedido_id } = req.body;
@@ -311,5 +331,7 @@ export const aceptPedido = async (req, res) => {
     res.status(500).json({ message: 'Error al crear la factura', error });
   }
 };
+
+
 
 
