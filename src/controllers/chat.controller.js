@@ -2,7 +2,7 @@
 import Message from '../models/chat.model.js'
 
 // Obtener todos los mensajes
-exports.getMessages = async (req, res) => {
+export const getMessages = async (req, res) => {
     try {
         const messages = await Message.find();
         res.status(200).json(messages);
@@ -12,7 +12,7 @@ exports.getMessages = async (req, res) => {
 };
 
 // Enviar un nuevo mensaje
-exports.sendMessage = async (req, res) => {
+export const sendMessage = async (req, res) => {
     const { username, text } = req.body;
 
     const newMessage = new Message({ username, text });
