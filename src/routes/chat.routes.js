@@ -4,10 +4,10 @@ import { getMessages, sendMessage} from '../controllers/chat.controller'
 // Ruta para obtener mensajes
 
 const router = Router();
-router.get('/chat/getmessages', getMessages);
+router.get('/getmessages', getMessages);
 
 // Ruta para enviar un mensaje
-router.post('/chat/sendmessages', sendMessage);
+router.post('/sendmessages', sendMessage);
 
 export default router;
 
