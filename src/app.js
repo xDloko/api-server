@@ -23,7 +23,7 @@ const server = http.createServer(app);
 
 const io = new SocketIo(server, {
     cors: {
-      origin: ["http://localhost:8000","http://api-server-production-12d3.up.railway.app"], 
+      origin: ["*"], 
       methods: ["GET", "POST"]
     }
   });
