@@ -29,11 +29,6 @@ const io = new SocketIo(server, {
     }
   });
 
-mongoose.connect('mongodb+srv://felpssense:aplication@senses.nbg2v.mongodb.net/?retryWrites=true&w=majority&appName=Senses', { 
-useNewUrlParser: true, 
-useUnifiedTopology: true 
-});
-
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado');
 
