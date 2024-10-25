@@ -36,8 +36,13 @@ useUnifiedTopology: true
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado');
 
+    Message.find().sort({ fecha: 1 }).then((mensajes) => {
+    socket.emit('mensajes_anteriores', mensajes);
+    });
+
     socket.on('nuevo_mensaje', async (data) => {
       const nuevoMensaje = new Mensaje({
+        username: data.username,
         texto: data.texto,
         fecha: new Date(),
       });
