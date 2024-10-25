@@ -6,7 +6,6 @@ import authstoreRoutes from './routes/Stores.routes.js'
 import systemRoutes from './routes/system.routes.js'
 import cors from 'cors'
 import { Server as SocketIo } from 'socket.io';
-import mongoose from 'mongoose'
 import http from 'http';
 import Message from './models/chat.model.js';
 
@@ -24,7 +23,7 @@ const server = http.createServer(app);
 
 const io = new SocketIo(server, {
     cors: {
-      origin: "http://api-server-production-12d3.up.railway.app", 
+      origin: ["http://localhost:8000","http://api-server-production-12d3.up.railway.app"], 
       methods: ["GET", "POST"]
     }
   });
